@@ -9,13 +9,13 @@ From the command line
 DHCP primary server:
 
 ```
-docker run -v ./runtime:/data -e HA=true -e ROLE=PRIMARY -e PEER_ADDRESS=169.254.1.2 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 -e MCLT=3600 -e SPLIT=128 --name dhcp-pri -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcp_ha
+docker run -v ./runtime:/data -e HA=true -e ROLE=PRIMARY -e PEER_ADDRESS=169.254.1.2 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 -e MCLT=3600 -e SPLIT=128 --name dhcp-pri -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcpd_ha
 ```
 
 DHCP secondary server:
 
 ```
-docker run -v ./runtime:/data -e HA=true -e ROLE=Secondary -e PEER_ADDRESS=169.254.1.1 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 --name dhcp-sec -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcp_ha
+docker run -v ./runtime:/data -e HA=true -e ROLE=Secondary -e PEER_ADDRESS=169.254.1.1 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 --name dhcp-sec -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcpd_ha
 ```
 
 ### Docker-Compose
@@ -29,6 +29,7 @@ version: '3.3'
 services:
     dhcp-server:
         container_name: dhcp-pri
+        image: 'sadviper/docker_dhcpd_ha'
         environment:
             - HA=true
             # Env used in HA Failover not required if not HA=true
@@ -45,7 +46,6 @@ services:
             - '647:647/tcp' # HA failover port
         volumes:
             - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
-        image: 'sadviper/docker_dhcp_ha'
 ```
 
 DHCP secondary server:
@@ -54,6 +54,7 @@ version: '3.3'
 services:
     dhcp-server:
         container_name: dhcp-sec
+        image: 'sadviper/docker_dhcpd_ha'
         environment:
             - HA=true
             # Env used in HA Failover not required if not HA=true
@@ -68,7 +69,6 @@ services:
             - '647:647/tcp' # HA failover port
         volumes:
             - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
-        image: 'sadviper/docker_dhcp_ha'
 ```
 
 ## Enviroment Values

@@ -2,7 +2,7 @@ version: '3.3'
 services:
     dhcp-server:
         container_name: dhcp
-        image: 'sadviper/dhcpd-ha:0.1'
+        image: 'sadviper/docker-dhcpd-ha:0.1'
         environment:
             - HA=true
             # Env used in HA Failover not required if not HA=true
