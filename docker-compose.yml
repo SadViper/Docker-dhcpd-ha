@@ -1,7 +1,8 @@
-version: '2'
+version: '3.3'
 services:
     dhcp-server:
         container_name: dhcp
+        image: 'sadviper/dhcpd-ha:0.1'
         environment:
             - HA=true
             # Env used in HA Failover not required if not HA=true
@@ -18,4 +19,3 @@ services:
             - '647:647/tcp' # HA failover port
         volumes:
             - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
-        image: 'sadviper/isc-dhcp:0.1'
