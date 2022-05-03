@@ -1,8 +1,8 @@
 docker ps -a
 
-docker build -t sadviper/dhcpd-ha:0.1 .
+docker build -t sadviper/docker_dhcp_ha:latest .
 
-docker run --name dhcp -d --init -p 67:67/udp sadviper/dhcpd-ha:0.1
+docker run --name dhcp -d --init -p 67:67/udp sadviper/docker_dhcp_ha:latest
 
 docker exec -it dhcp /bin/sh
 

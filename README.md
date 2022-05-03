@@ -9,13 +9,13 @@ From the command line
 DHCP primary server:
 
 ```
-docker run -v ./runtime:/data -e HA=true -e ROLE=PRIMARY -e PEER_ADDRESS=169.254.1.2 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 -e MCLT=3600 -e SPLIT=128 --name dhcp-pri -p 67:67/udp -p 647:647/tcp --restart always sadviper/dhcpd-ha
+docker run -v ./runtime:/data -e HA=true -e ROLE=PRIMARY -e PEER_ADDRESS=169.254.1.2 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 -e MCLT=3600 -e SPLIT=128 --name dhcp-pri -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcp_ha
 ```
 
 DHCP secondary server:
 
 ```
-docker run -v ./runtime:/data -e HA=true -e ROLE=Secondary -e PEER_ADDRESS=169.254.1.1 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 --name dhcp-sec -p 67:67/udp -p 647:647/tcp --restart always sadviper/dhcpd-ha
+docker run -v ./runtime:/data -e HA=true -e ROLE=Secondary -e PEER_ADDRESS=169.254.1.1 -e HA_PORT=647 -e MAX_RESPONSE_DELAY=15 -e MAX_UNACKED_UPDATES=10 -e LOAD_BALANCE_MAX_SECONDS=3 --name dhcp-sec -p 67:67/udp -p 647:647/tcp --restart always sadviper/docker_dhcp_ha
 ```
 
 ### Docker-Compose
@@ -45,7 +45,7 @@ services:
             - '647:647/tcp' # HA failover port
         volumes:
             - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
-        image: 'sadviper/dhcpd-ha'
+        image: 'sadviper/docker_dhcp_ha'
 ```
 
 DHCP secondary server:
@@ -68,7 +68,7 @@ services:
             - '647:647/tcp' # HA failover port
         volumes:
             - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
-        image: 'sadviper/dhcpd-ha'
+        image: 'sadviper/docker_dhcp_ha'
 ```
 
 ## Enviroment Values
