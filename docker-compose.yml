@@ -1,0 +1,20 @@
+version: '2'
+services:
+    dhcp-server:
+        container_name: dhcp
+        environment:
+            - HA=true
+            - ROLE=PRIMARY
+            - PEER_ADDRESS=169.254.1.1
+            - HA_PORT=647
+            - MAX_RESPONSE_DELAY=15
+            - MAX_UNACKED_UPDATES=10
+            - LOAD_BALANCE_MAX_SECONDS=3
+            - MCLT=3600
+            - SPLIT=128
+        ports:
+            - '67:67/udp'
+            - '647:647/tcp'
+        volumes:
+            - ./runtime:/data
+        image: 'sadviper/isc-dhcp:0.1'

@@ -1,0 +1,13 @@
+docker ps -a
+
+docker build -t sadviper/dhcpd-ha:0.1 .
+
+docker run --name dhcp -d --init -p 67:67/udp sadviper/dhcpd-ha:0.1
+
+docker exec -it dhcp /bin/sh
+
+docker stop dhcp && docker rm dhcp
+
+docker-compose up -d
+
+docker-compose down
