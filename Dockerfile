@@ -11,8 +11,8 @@ RUN apt-get -q -y update \
 RUN touch /var/lib/dhcp/dhcpd.leases
 
 ENV HA=false \
-    ROLE=PRIMARY \
-    PEER_ADDRESS=169.254.1.2 \
+    ROLE= \
+    PEER_ADDRESS= \
     HA_PORT=647 \
     MAX_RESPONSE_DELAY=60 \
     MAX_UNACKED_UPDATES=10 \

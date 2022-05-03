@@ -4,6 +4,7 @@ services:
         container_name: dhcp
         environment:
             - HA=true
+            # Env used in HA Failover not required if not HA=true
             - ROLE=PRIMARY
             - PEER_ADDRESS=169.254.1.1
             - HA_PORT=647
@@ -14,7 +15,7 @@ services:
             - SPLIT=128
         ports:
             - '67:67/udp'
-            - '647:647/tcp'
+            - '647:647/tcp' # HA failover port
         volumes:
-            - ./runtime:/data
+            - ./runtime:/data # Save dhcpd.conf and dhcpd.leases
         image: 'sadviper/isc-dhcp:0.1'
