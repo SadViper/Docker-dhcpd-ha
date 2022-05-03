@@ -10,7 +10,7 @@ RUN apt-get -q -y update \
 
 RUN touch /var/lib/dhcp/dhcpd.leases
 
-ENV HA=true \
+ENV HA=false \
     ROLE=PRIMARY \
     PEER_ADDRESS=169.254.1.2 \
     HA_PORT=647 \
